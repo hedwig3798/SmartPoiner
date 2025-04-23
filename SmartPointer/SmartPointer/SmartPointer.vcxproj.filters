@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlBlock.h">
+      <Filter>ControlBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedPointer.h">
+      <Filter>SmartPointer\SharedPointer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISmartPointerManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>EntryPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlBlock.cpp">
+      <Filter>ControlBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedPointer.cpp">
+      <Filter>SmartPointer\SharedPointer</Filter>
+    </ClCompile>
+    <ClCompile Include="ISmartPointerManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="EntryPoint">
+      <UniqueIdentifier>{3e71e3d7-1c83-41e5-85f4-8892f5e85134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{3a94b55a-669e-4f9c-847b-7ee0a553551e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmartPointer">
+      <UniqueIdentifier>{a6d83214-f6a2-43e6-b2f1-f61c9404104a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ControlBlock">
+      <UniqueIdentifier>{a9ad11c2-2146-4dcd-a986-3794dbfaac8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmartPointer\SharedPointer">
+      <UniqueIdentifier>{8135b659-df3a-4e35-8326-94e160892394}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
