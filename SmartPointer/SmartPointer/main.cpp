@@ -1,19 +1,24 @@
 ﻿#include "pch.h"
-#include "ISmartPointerManager.h"
+#include "SharedPointer.h"
+#include "UniquePointer.h"
 #include <iostream>
 
 int main()
 {
-	SharedPointer<int> a = ISmartPointerManager::CreateSharedPointer<int>();
-	SharedPointer<int> b = a;
+	SharedPointer<int> sharedTestA = SharedPointer<int>(1);
+	SharedPointer<int> sharedTestB = sharedTestA;
 
-	*a = 1;
+	std::cout << *sharedTestA << " " << *sharedTestB << "\n";
 
-	std::cout << *a << " " << *b << "\n";
+	*sharedTestB = 2;
 
-	*b = 2;
+	std::cout << *sharedTestA << " " << *sharedTestB << "\n";
 
-	std::cout << *a << " " << *b << "\n";
+	UniquePointer<int> uniqueTestA = UniquePointer<int>(1);
+	std::cout << *uniqueTestA << "\n";
+	UniquePointer<int> uniqueTestB = std::move(uniqueTestA);
+	// uniqueTestB = uniqueTestA;
+	std::cout << *uniqueTestB << "\n";
 
 	return 0;
 }
