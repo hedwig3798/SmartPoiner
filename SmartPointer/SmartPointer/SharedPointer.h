@@ -2,6 +2,8 @@
 #include "IAllocator.h"
 #include "ControlBlock.h"
 
+template<typename T> class WeakPointer;
+
 /// <summary>
 /// std::shared_pointer를 모방한 클래스
 /// 커스텀 할당자를 사용할 수 있게 바꿈
@@ -9,7 +11,7 @@
 template<typename T>
 class SharedPointer
 {
-	friend class ISmartPointerManager;
+	template<typename T> friend class WeakPointer;
 
 private:
 	// 주소
@@ -20,6 +22,21 @@ private:
 	// 각 요소에 대해 다른 할당자를 사용할 수 있다.
 	IAllocator* m_adressAllocator;
 	IAllocator* m_controlBlockAllocator;
+private:
+
+	/// <summary>
+	/// 생성자
+	/// </summary>
+	/// <param name="_adressAllocator">객체 할당자</param>
+	/// <param name="_controlBlockAllocator">컨트롤 블록 할당자</param>
+	explicit SharedPointer(IAllocator* _adressAllocator, IAllocator* _controlBlockAllocator, T* _address, ControlBlock* _controlBlock)
+		: m_adressAllocator(_adressAllocator)
+		, m_controlBlockAllocator(_controlBlockAllocator)
+		, m_address(_address)
+		, m_controlBlock(_controlBlock)
+	{
+		m_controlBlock->m_refCount.fetch_add(1, std::memory_order_relaxed);
+	};
 
 public:
 	/// <summary>
@@ -67,10 +84,13 @@ public:
 			{
 				// 할당자가 있다면 해제 방법이 다르다.
 				(m_adressAllocator != nullptr) ? (void)(m_adressAllocator->Deallocate((void*)m_address)) : delete m_address;
-				(m_controlBlockAllocator != nullptr) ? (void)(m_controlBlockAllocator->Deallocate((void*)m_controlBlock)) : delete m_controlBlock;
-
 				m_address = nullptr;
-				m_controlBlock = nullptr;
+
+				if (m_controlBlock->m_weakCount.load(std::memory_order_relaxed) == 0)
+				{
+					(m_controlBlockAllocator != nullptr) ? (void)(m_controlBlockAllocator->Deallocate((void*)m_controlBlock)) : delete m_controlBlock;
+					m_controlBlock = nullptr;
+				}
 			}
 		}
 

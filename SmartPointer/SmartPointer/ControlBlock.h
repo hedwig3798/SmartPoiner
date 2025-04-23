@@ -8,7 +8,7 @@ struct ControlBlock
 
 	ControlBlock()
 		: m_refCount(1)
-		, m_weakCount(1)
+		, m_weakCount(0)
 	{
 
 	}
